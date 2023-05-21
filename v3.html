@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <style>
+    /* Add styling as desired */
+    .arc {
+      fill-opacity: 1;
+    }
+    .tooltip {
+      position: absolute;
+      pointer-events: none;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 8px;
+      font-family: Arial, sans-serif;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    // Your matrix data
+    const data = [
+  [
+    1382, 0, 0, 0, 0,
+       0, 0, 0, 0, 0,
+       0, 0, 0, 0, 0
+  ],
+  [
+    0, 1382, 0, 0, 0,
+    0,    0, 0, 0, 0,
+    0,    0, 0, 0, 0
+  ],
+  [
+       0,    0, 1382, 1038,
+     927, 1087, 1227,  941,
+    1188, 1244, 1270, 1143,
+    1221, 1124, 1164
+  ],
+  [
+       0,    0, 1038, 1382,
+     855,  953, 1093,  807,
+    1074, 1106, 1132, 1053,
+    1089, 1038,  996
+  ],
+  [
+       0,   0,  927, 855,
+    1382, 988,  988, 824,
+     877, 983, 1005, 896,
+     954, 795,  875
+  ],
+  [
+       0,    0, 1087,  953,
+     988, 1382, 1160,  860,
+    1079, 1163, 1187, 1066,
+    1140,  977, 1059
+  ],
+  [
+       0,    0, 1227, 1093,
+     988, 1160, 1382,  986,
+    1197, 1301, 1327, 1210,
+    1280, 1107, 1187
+  ],
+  [
+      0,    0,  941,  807,
+    824,  860,  986, 1382,
+    919, 1009, 1035,  924,
+    988,  857, 1031
+  ],
+  [
+       0,    0, 1188, 1074,
+     877, 1079, 1197,  919,
+    1382, 1218, 1240, 1115,
+    1191, 1116, 1138
+  ],
+  [
+       0,    0, 1244, 1106,
+     983, 1163, 1301, 1009,
+    1218, 1382, 1346, 1221,
+    1303, 1132, 1206
+  ],
+  [
+       0,    0, 1270, 1132,
+    1005, 1187, 1327, 1035,
+    1240, 1346, 1382, 1245,
+    1323, 1152, 1232
+  ],
+  [
+       0,    0, 1143, 1053,
+     896, 1066, 1210,  924,
+    1115, 1221, 1245, 1382,
+    1254, 1035, 1105
+  ],
+  [
+       0,    0, 1221, 1089,
+     954, 1140, 1280,  988,
+    1191, 1303, 1323, 1254,
+    1382, 1115, 1183
+  ],
+  [
+       0,    0, 1124, 1038,
+     795,  977, 1107,  857,
+    1116, 1132, 1152, 1035,
+    1115, 1382, 1060
+  ],
+  [
+       0,    0, 1164,  996,
+     875, 1059, 1187, 1031,
+    1138, 1206, 1232, 1105,
+    1183, 1060, 1382
+  ]
+];
+
+    // Category labels
+    const categories = [
+      "Horror", "Crime", "Comedy", "Romance", "Music", "Adventure", "Mystery", "War",
+      "Western", "Biography", "History", "Thriller", "Sci-Fi", "Action", "Drama"
+    ];
+
+    // Color scale for categories
+    const colorScale = d3.scaleOrdinal()
+      .domain(categories)
+      .range(d3.schemeCategory10);
+
+    // Set up the dimensions and margins of the diagram
+    const width = 800;
+    const height = 800;
+    const margin = { top: 20, right: 20, bottom: 20, left: 20 };
+    const innerWidth = width - margin.left - margin.right;
+    const innerHeight = height - margin.top - margin.bottom;
+    const outerRadius = Math.min(innerWidth, innerHeight) * 0.5;
+    const innerRadius = outerRadius - 30;
+
+    // Create the SVG element
+    const svg = d3.select("body")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height)
+      .append("g")
+      .attr("transform", `translate(${width / 2},${height / 2})`);
+
+    // Create the chord layout
+    const chord = d3.chord()
+      .padAngle(0.05)
+      .sortSubgroups(d3.descending)
+      .sortChords(d3.descending);
+
+    // Generate the chord data from the matrix
+    const chords = chord(data);
+
+    // Create the arcs for the groups
+    const group = svg.selectAll("g")
+      .data(chords.groups)
+      .join("g");
+
+    group.append("path")
+      .attr("class", "arc")
+      .attr("fill", (d, i) => colorScale(categories[i]))
+      .attr("d", d3.arc()
+        .innerRadius(innerRadius)
+        .outerRadius(outerRadius)
+      );
+
+    group.append("text")
+      .each(d => { d.angle = (d.startAngle + d.endAngle) / 2; })
+      .attr("dy", "0.35em")
+      .attr("transform", d => `
+        rotate(${(d.angle * 180 / Math.PI - 90)})
+        translate(${outerRadius + 10})
+        ${d.angle > Math.PI ? "rotate(180)" : ""}
+      `)
+      .attr("text-anchor", d => d.angle > Math.PI ? "end" : null)
+      .text((d, i) => categories[i]);
+
+    // Create the ribbons for the chords
+    svg.selectAll("path")
+      .data(chords)
+      .join("path")
+      .attr("fill", (d) => {
+        const sourceCategory = categories[d.source.index];
+        const targetCategory = categories[d.target.index];
+        return d3.interpolate(colorScale(sourceCategory), colorScale(targetCategory))(0.5);
+      })
+      .attr("d", d3.ribbon()
+        .radius(innerRadius)
+      )
+      .on("mouseover", function (event, d) {
+        d3.select(this).attr("fill-opacity", 1);
+        tooltip.style("opacity", 1)
+          .html(`Number of Movies: ${d.source.value}`)
+          .style("left", `${event.pageX + 10}px`)
+          .style("top", `${event.pageY + 10}px`);
+      })
+      .on("mouseout", function () {
+        d3.select(this).attr("fill-opacity", 1);
+        tooltip.style("opacity", 0);
+      });
+
+    // Create a tooltip element
+    const tooltip = d3.select("body")
+      .append("div")
+      .attr("class", "tooltip");
+
+  </script>
+</body>
+</html>
