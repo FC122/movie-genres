@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
+
+<body>
+  <h1>Movie Genres</h1>
+  <div class="controls-container">
+    <div class="">
+      <div class="slider">
+        <div>Year</div>
+        <input type="range" min="1900" max="2020" value="2020" id="columnYearSlider">
+        <span id="columnYearValue">2020</span>
+      </div>
+    
+      <div class="slider">
+        <div>Value</div>
+        <input type="range" min="0" max="10" value="10" id="ratingSlider">
+        <span id="ratingValue">10</span>
+      </div>
+      
+      <div class="slider">
+        <div>Gross</div>
+        <input type="range" min="0" max="2000000000" value="2000000000" id="grossSlider">
+        <span id="grossValue">2000000000</span>
+      </div>
+      
+      <div class="slider">
+        <div>Runtime</div>
+        <input type="range" min="0" max="300" value="300" id="runtimeSlider">
+        <span id="runtimeValue">300</span>
+      </div>
+    </div>
+  </div>
+  <svg id="chordDiagram"></svg>
+  <script src="script.js"></script>
+</body>
+</html>

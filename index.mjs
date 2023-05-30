@@ -1,5 +1,5 @@
-const fs = require('fs');
-const csv = require('csv-parser');
+import fs from 'fs';
+import csv from 'csv-parser';
 
 function getColumnFromCSV(csvFile, columnIndex, delimiter = ',') {
   return new Promise((resolve, reject) => {
@@ -10,7 +10,7 @@ function getColumnFromCSV(csvFile, columnIndex, delimiter = ',') {
       .on('data', (row) => {
         const rowData = Object.values(row);
         if (rowData.length > columnIndex) {
-          column.push(rowData[columnIndex]);
+            column.push(rowData[columnIndex]);
         }
       })
       .on('end', () => {
@@ -21,21 +21,20 @@ function getColumnFromCSV(csvFile, columnIndex, delimiter = ',') {
       });
   });
 }
-//D:\Movie Genres\movie-genres
-const csvFile = "dataset_movies.csv";
-const columnIndex = 2; // Index of the desired column (0-based)
-// Matrix 15x15 
+
+const csvFile = 'dataset_movies.csv';
 const data = [];
+
+
 
 (async () => {
   try {
-    for (let i = 0; i < 15; i++) {
+    for (let i = 2; i < 16; i++) {
       const columnI = await getColumnFromCSV(csvFile, i);
 
       const row = [];
-      for (let j = 0; j < 15; j++) {
+      for (let j = 2; j < 16; j++) {
         const columnJ = await getColumnFromCSV(csvFile, j);
-
         let ctr = 0;
         for (let k = 0; k < columnI.length; k++) {
           if (columnI[k] === columnJ[k]) {
