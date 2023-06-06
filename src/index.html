@@ -4,39 +4,47 @@
   <meta charset="utf-8">
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <link rel="stylesheet" href="styles.css">
-
 </head>
 
 <body>
-  <h1>Movie Genres</h1>
-  <div class="controls-container">
-    <div class="">
-      <div class="slider">
-        <div>Year</div>
-        <input type="range" min="1900" max="2020" value="2020" id="columnYearSlider">
-        <span id="columnYearValue">2020</span>
-      </div>
-    
-      <div class="slider">
-        <div>Value</div>
-        <input type="range" min="0" max="10" value="10" id="ratingSlider">
-        <span id="ratingValue">10</span>
-      </div>
-      
-      <div class="slider">
-        <div>Gross</div>
-        <input type="range" min="0" max="2000000000" value="2000000000" id="grossSlider">
-        <span id="grossValue">2000000000</span>
-      </div>
-      
-      <div class="slider">
-        <div>Runtime</div>
-        <input type="range" min="0" max="300" value="300" id="runtimeSlider">
-        <span id="runtimeValue">300</span>
+  <div class="container">
+    <h1>Movie Genres</h1>
+
+    <div id="text">
+      <p>Vizualizacija podataka prikazuje multidimenzionalne ovisnosti između žanrova, godina, trajanja, zarade i ocjene filmova. Kroz upotrebu dijagrama lukova, vizualno su prikazani trendovi i distribucija filmova u različitim žanrovima. Ova analiza omogućuje uočavanje popularnosti određenih žanrova u određenom rasponu godina, povezanosti između trajanja filma, zarade i ocjene te njihovog međusobnog utjecaja. Također, putem vizualizacije podataka moguće je istražiti interakciju žanrova s drugim varijablama kao što su zarada ili ocjena te prepoznati trendove ili obrasce koji se pojavljuju u filmskoj industriji. Vizualizacija podataka o žanrovima filmova pruža dublji uvid u svijet filma i pomaže u boljem razumijevanju preferencija publike i trendova u filmskoj industriji.</p>
+    </div>
+
+    <div class="controls-container">
+      <div class="sliders">
+        <div class="slider">
+          <div>The Year of the Release</div>
+          <input type="range" min="1900" max="2020" value="2020" id="columnYearSlider">
+          <span id="columnYearValue">2020</span>
+        </div>
+
+        <div class="slider">
+          <div>iMDB Score</div>
+          <input type="range" min="0" max="10" value="10" id="ratingSlider">
+          <span id="ratingValue">10</span>
+        </div>
+
+        <div class="slider">
+          <div>Gross</div>
+          <input type="range" min="0" max="2000000000" value="2000000000" id="grossSlider">
+          <span id="grossValue">2000000000</span>
+        </div>
+
+        <div class="slider">
+          <div>Runtime</div>
+          <input type="range" min="0" max="300" value="300" id="runtimeSlider">
+          <span id="runtimeValue">300</span>
+        </div>
       </div>
     </div>
+
+    <svg id="chordDiagram"></svg>
   </div>
-  <svg id="chordDiagram"></svg>
+
   <script src="script.js"></script>
 </body>
 </html>

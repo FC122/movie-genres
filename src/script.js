@@ -189,8 +189,8 @@ function visualizeChordDiagram(data) {
     .domain(categories)
     .range(d3.schemeCategory10);
 
-  const width = 900;
-  const height = 700;
+  const width = 850;
+  const height = 600;
   const margin = { top: 20, right: 20, bottom: 20, left: 20 };
   const innerWidth = width - margin.left - margin.right;
   const innerHeight = height - margin.top - margin.bottom;
@@ -204,7 +204,7 @@ function visualizeChordDiagram(data) {
     .style("display", "block")
     .style("margin", "auto")
     .append("g")
-    .attr("transform", `translate(${width / 2},${height / 2})`);
+    .attr("transform", `translate(${(width / 2)+300},${(height / 2)-50})`);
 
   const tooltip = d3
     .select("body")

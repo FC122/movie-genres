@@ -22,6 +22,7 @@
   opacity: 0;  /* Initially hidden */
   transition: opacity 0.3s ease-in-out;
 }
+
 button {
   background-color: #eee;
   border: 1px solid #ccc;
@@ -31,91 +32,69 @@ button {
   width: 100px;
   height: 50px;
 }
-.btn{
+
+.btn {
   padding: 20px;
 }
+
 body {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
   background-color: black;
 }
+
 h1 {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   text-align: center;
-  width: 100%;
-  margin-top: 20px;
   color: white;
 }
 
-svg {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  max-height: 100%;
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: white;
+  padding-top: 0px;
+}
+
+#text {
+  margin-bottom: 20px;
+  text-align: center;
 }
 
 .genre-text {
-  font-size: 15px;
-  fill: #fff;
-  pointer-events: none;
-}
-
-.slider {
-  width: 200px;
-  margin-right: 10px;
-  padding: 20px;
-}
-
-.slider input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 100%;
-  height: 5px;
-  background: #ccc;
-  outline: none;
-  opacity: 0.7;
-  transition: opacity 0.2s;
-  border-radius: 5px;
-}
-
-.slider input[type="range"]::-webkit-slider-thumb,
-.slider input[type="range"]::-moz-range-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 16px;
-  height: 16px;
-  background: #666;
-  border-radius: 50%;
-  cursor: pointer;
+  fill: white;
 }
 
 .controls-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  align-items: flex-start;
   margin-bottom: 10px;
-  margin-left: 250px;
+  margin-left: 10px;
 }
 
-.controls-row {
+.sliders {
   display: flex;
-  align-items: center;
-  margin-bottom: 10px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.slider {
+  width: 200px;
 }
 
 span {
   color: white;
 }
 
-div{
+div {
   color: white;
 }
 
+#chordDiagram {
+  margin-top: 500px;
+  width: 100%;
+  max-height: calc(100vh - 180px);
+}
